@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * @program: open-blog
- * @description:
+ * @description: 博文
  * @author: dedong.hao
  * @create: 2019-08-29 21:45
  */
@@ -51,5 +51,6 @@ public class Blog {
      */
     private Boolean isActive;
 
-//    private List<BlogDiscuss> blogDiscusses;
+    private List<Tag> tags;
+
 }

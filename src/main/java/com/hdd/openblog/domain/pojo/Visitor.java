@@ -3,8 +3,6 @@ package com.hdd.openblog.domain.pojo;
 import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.List;
-
 /**
  * @program: open-blog
  * @description: 访客
@@ -14,6 +12,7 @@ import java.util.List;
 @Document
 @Data
 public class Visitor {
+    private String visitorId;
     /**
      * 昵称
      */
@@ -23,7 +22,10 @@ public class Visitor {
      */
     private String email;
     private String ip;
-
+    /**
+     * 随机图片
+     */
+    private String image;
 
 
 }
