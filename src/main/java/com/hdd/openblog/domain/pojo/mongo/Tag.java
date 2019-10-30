@@ -1,4 +1,6 @@
-package com.hdd.openblog.domain.pojo;
+package com.hdd.openblog.domain.pojo.mongo;
+
+import lombok.Data;
 
 /**
  * @program: open-blog
@@ -6,12 +8,14 @@ package com.hdd.openblog.domain.pojo;
  * @author: dedong.hao
  * @create: 2019-08-29 22:15
  */
+@Data
 public class Tag {
+
+    private String id;
     /**
      * 标签名称
      */
     private String tagName;
 
-    private Integer
 
 }

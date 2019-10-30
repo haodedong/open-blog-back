@@ -1,0 +1,17 @@
+profiles: dev
+
+spring:
+  data:
+    mongodb:
+      host: 47.101.55.23
+#      username:
+#      password:
+      database: open-blog
+
+
+
+server:
+    port: 6666
+
+
+

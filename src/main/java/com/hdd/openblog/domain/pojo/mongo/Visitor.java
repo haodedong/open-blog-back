@@ -1,4 +1,4 @@
-package com.hdd.openblog.domain.pojo;
+package com.hdd.openblog.domain.pojo.mongo;
 
 import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;

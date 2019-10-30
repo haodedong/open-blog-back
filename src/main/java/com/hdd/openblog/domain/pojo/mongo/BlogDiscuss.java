@@ -1,4 +1,4 @@
-package com.hdd.openblog.domain.pojo;
+package com.hdd.openblog.domain.pojo.mongo;
 
 import lombok.Data;
 
@@ -13,9 +13,9 @@ import java.util.Date;
 @Data
 public class BlogDiscuss {
     /**
-     * 博客id
+     * 评论id
      */
-    private String blogId;
+    private String discussId;
     /**
      * 父级评论id或顶级对应博文id
      */
@@ -28,6 +28,10 @@ public class BlogDiscuss {
      * 访客Id
      */
     private String visitorId;
+    /**
+     * 点赞数
+     */
+    private Long popularity;
     /**
      * 评论时间
      */
