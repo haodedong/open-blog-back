@@ -63,5 +63,9 @@ public class Blog {
      * 标签
      */
     private List<String> tags;
+    /**
+     * 分类
+     */
+    private List<String> category;
 
 }

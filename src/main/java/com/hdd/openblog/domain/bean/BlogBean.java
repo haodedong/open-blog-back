@@ -1,7 +1,6 @@
 package com.hdd.openblog.domain.bean;
 
-import com.hdd.openblog.domain.pojo.mongo.Blog;
-import com.hdd.openblog.domain.pojo.mongo.Tag;
+import com.mongodb.Tag;
 import lombok.Data;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Field;

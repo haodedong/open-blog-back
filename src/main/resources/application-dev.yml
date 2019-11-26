@@ -3,8 +3,8 @@ profiles: dev
 spring:
   data:
     mongodb:
-      host: 47.101.55.23
-#      username:
+      host: 10.0.0.131
+#      username: 10.0.0.131
 #      password:
       database: open-blog
 

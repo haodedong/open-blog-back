@@ -2,18 +2,13 @@ package com.hdd.openblog.service.impl;
 
 import com.hdd.openblog.dao.BlogMongoDao;
 import com.hdd.openblog.domain.pojo.mongo.Blog;
+import com.hdd.openblog.domain.request.GetBlogPageByTagsRequest;
 import com.hdd.openblog.service.BlogService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * @program: open-blog
@@ -33,28 +28,22 @@ public class BlogServiceImpl implements BlogService {
      * @param pageRequest
      * @return
      */
+    @Override
     public Page<Blog> findBlogByPage(PageRequest pageRequest) {
-        Page<Blog> blogs = blogMongoDao.findBlogByPage(pageRequest);
+        return blogMongoDao.findBlogByPage(pageRequest);
     }
 
-    /**
-     * 新增一篇博客
-     *
-     * @param blog
-     * @return
-     */
+    @Override
     public ObjectId addBlog(Blog blog) {
-        return mongoTemplate.insert(blog).get_id();
+        return blogMongoDao.insertBlog(blog);
     }
 
-    /**
-     * 根据id查询博客
-     *
-     * @param id
-     * @return
-     */
+    @Override
     public Blog findBlogByObjectId(ObjectId id) {
-        Criteria
-        return mongoTemplate.findOne()
+        return blogMongoDao.getBlogById(id);
+    }
+
+    public Page<Blog> findBlogsByTagsWithPage(GetBlogPageByTagsRequest request) {
+        blogMongoDao.findBlogsByTagsWithPage(request);
     }
 }
