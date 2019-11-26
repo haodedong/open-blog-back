@@ -1,7 +1,7 @@
 package com.hdd.openblog.dao;
 
 import com.hdd.openblog.domain.pojo.mongo.Blog;
-import com.hdd.openblog.domain.request.GetBlogPageByTagsRequest;
+import com.hdd.openblog.domain.request.GetBlogsPageByTagsRequest;
 import com.mongodb.client.result.UpdateResult;
 import org.apache.commons.collections4.CollectionUtils;
 import org.bson.types.ObjectId;
@@ -98,13 +98,23 @@ public class BlogMongoDao {
      */
     public UpdateResult editBlog(Blog blog) {
         Query query = new Query(new Criteria("_id").is(blog.get_id()));
+        Update update = packageBeanField(blog, blog.getClass());
+        return this.mongoTemplate.updateFirst(query, update, Blog.class);
+    }
+
+    /**
+     * 包装mongoTemplate的 Update 对象
+     *
+     * @param object
+     * @param beanClass
+     */
+    private Update packageBeanField(Object object, Class<?> beanClass) {
         Update update = new Update();
-        Class<? extends Blog> blogClass = blog.getClass();
-        Field[] declaredFields = blogClass.getDeclaredFields();
+        Field[] declaredFields = beanClass.getDeclaredFields();
         for (Field field : declaredFields) {
             try {
                 field.setAccessible(true);
-                Object value = field.get(blog);
+                Object value = field.get(object);
                 if (value != null && !field.getName().equals("_id")) {
                     update.set(field.getName(), value);
                 }
@@ -112,13 +122,12 @@ public class BlogMongoDao {
                 e.printStackTrace();
             }
         }
-
-        return this.mongoTemplate.updateFirst(query, update, Blog.class);
+        return update;
     }
 
-    public void findBlogsByTagsWithPage(GetBlogPageByTagsRequest request) {
+    public void findBlogsByTagsWithPage(GetBlogsPageByTagsRequest request) {
 
     }
 
-//    public List<Blog> getBl
+    public findBlogsByTagsWithPage()
 }

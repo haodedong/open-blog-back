@@ -2,7 +2,7 @@ package com.hdd.openblog.service.impl;
 
 import com.hdd.openblog.dao.BlogMongoDao;
 import com.hdd.openblog.domain.pojo.mongo.Blog;
-import com.hdd.openblog.domain.request.GetBlogPageByTagsRequest;
+import com.hdd.openblog.domain.request.GetBlogsPageByTagsRequest;
 import com.hdd.openblog.service.BlogService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +43,7 @@ public class BlogServiceImpl implements BlogService {
         return blogMongoDao.getBlogById(id);
     }
 
-    public Page<Blog> findBlogsByTagsWithPage(GetBlogPageByTagsRequest request) {
+    public Page<Blog> findBlogsByTagsWithPage(GetBlogsPageByTagsRequest request) {
         blogMongoDao.findBlogsByTagsWithPage(request);
     }
 }
