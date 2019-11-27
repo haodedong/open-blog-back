@@ -27,15 +27,15 @@ public class BlogMongoDaoTest extends OpenBlogApplicationTests {
 
     @Test
     public void getBlogById() {
-        Blog blogById = blogMongoDao.getBlogById("5ddcd25a57ba5822549bc0b4");
-        System.out.println(JSON.toJSONString(blogById));
+//        Blog blogById = blogMongoDao.getBlogById("5ddcd25a57ba5822549bc0b4");
+//        System.out.println(JSON.toJSONString(blogById));
 
     }
 
     @Test
-    public void getBlogsByTags() {
-        List<Blog> blogsByTags = blogMongoDao.getBlogsByTags(Collections.singletonList("33444"));
-        System.out.println(JSON.toJSON(blogsByTags));
+    public void getBlogByTags() {
+        List<Blog> blogByTags = blogMongoDao.getBlogByTags(Collections.singletonList("33444"));
+        System.out.println(JSON.toJSON(blogByTags));
     }
 
     @Test

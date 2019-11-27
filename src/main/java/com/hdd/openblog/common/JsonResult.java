@@ -9,10 +9,14 @@ import lombok.Data;
  * @create: 2019-11-26 21:09
  */
 @Data
-public class JsonResult<T> {
-    private T data;
+public class JsonResult {
+    private Object data;
     /**
      * 默认0 正常返回
      */
     private int code = 0;
+
+    public JsonResult(Object data) {
+        this.data = data;
+    }
 }

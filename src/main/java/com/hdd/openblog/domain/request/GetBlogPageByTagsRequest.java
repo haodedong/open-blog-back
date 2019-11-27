@@ -12,6 +12,6 @@ import java.util.List;
  * Time :2019/11/26
  */
 @Data
-public class GetBlogsPageByTagsRequest extends PageRequest {
+public class GetBlogPageByTagsRequest extends PageRequest {
     private List<String> tags;
 }

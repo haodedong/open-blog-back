@@ -1,14 +1,12 @@
 package com.hdd.openblog.dao;
 
+import com.hdd.openblog.common.PageResponse;
 import com.hdd.openblog.domain.pojo.mongo.Blog;
-import com.hdd.openblog.domain.request.GetBlogsPageByTagsRequest;
+import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
 import org.apache.commons.collections4.CollectionUtils;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -33,14 +31,15 @@ public class BlogMongoDao {
 
     /**
      * 分页检索博客摘要列表
-     *
-     * @param pageRequest
-     * @return
      */
-    public Page<Blog> findBlogByPage(PageRequest pageRequest) {
-        Query query = Query.query(new Criteria());
-        query.skip(pageRequest.getOffset());
-        query.limit(pageRequest.getPageSize());
+    public PageResponse<Blog> findBlogByPage(int pageNo, int pageSize, List<String> tags) {
+        Criteria criteria = new Criteria();
+        if (CollectionUtils.isNotEmpty(tags)) {
+            criteria = criteria.and("tags").in(tags);
+        }
+        Query query = Query.query(criteria);
+        query.skip((pageNo - 1) * pageSize);
+        query.limit(pageSize);
         query.fields()
                 .include("_id")
                 .include("title")
@@ -53,9 +52,9 @@ public class BlogMongoDao {
         long count = mongoTemplate.count(query, Blog.class);
         if (count > 0) {
             List<Blog> blogList = mongoTemplate.find(query, Blog.class);
-            return new PageImpl<>(blogList, pageRequest, count);
+            return new PageResponse<>(blogList, count);
         } else {
-            return Page.empty();
+            return PageResponse.empty();
         }
     }
 
@@ -75,7 +74,7 @@ public class BlogMongoDao {
      * @param tags
      * @return
      */
-    public List<Blog> getBlogsByTags(List<String> tags) {
+    public List<Blog> getBlogByTags(List<String> tags) {
         if (CollectionUtils.isEmpty(tags)) {
             return Collections.emptyList();
         } else {
@@ -115,7 +114,7 @@ public class BlogMongoDao {
             try {
                 field.setAccessible(true);
                 Object value = field.get(object);
-                if (value != null && !field.getName().equals("_id")) {
+                if (value != null && !"_id".equals(field.getName())) {
                     update.set(field.getName(), value);
                 }
             } catch (IllegalAccessException e) {
@@ -125,9 +124,12 @@ public class BlogMongoDao {
         return update;
     }
 
-    public void findBlogsByTagsWithPage(GetBlogsPageByTagsRequest request) {
-
+    public PageResponse<Blog> findBlogByTagsWithPage(int pageNo, int pageSize, List<String> tags) {
+        return findBlogByPage(pageNo, pageSize, tags);
     }
 
-    public findBlogsByTagsWithPage()
+    public Boolean deleteBlog(String blogId) {
+        DeleteResult result = this.mongoTemplate.remove(new Query(Criteria.where("_Id").is(new ObjectId(blogId))), Blog.class);
+        return result.getDeletedCount() > 0;
+    }
 }

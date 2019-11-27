@@ -2,9 +2,8 @@ package com.hdd.openblog.controller;
 
 import com.hdd.openblog.common.JsonResult;
 import com.hdd.openblog.common.PageRequest;
-import com.hdd.openblog.common.PageResponse;
-import com.hdd.openblog.domain.pojo.mongo.Blog;
-import com.hdd.openblog.domain.request.GetBlogsPageByTagsRequest;
+import com.hdd.openblog.domain.request.AddBlogRequest;
+import com.hdd.openblog.domain.request.GetBlogPageByTagsRequest;
 import com.hdd.openblog.domain.request.UpdateBlogRequest;
 
 public interface BlogController {
@@ -14,7 +13,7 @@ public interface BlogController {
      * @param request
      * @return
      */
-    JsonResult<PageResponse<Blog>> findBlogsWithPage(PageRequest request);
+    JsonResult findBlogWithPage(PageRequest request);
 
     /**
      * 根据标签检索博客
@@ -22,13 +21,17 @@ public interface BlogController {
      * @param request
      * @return
      */
-    JsonResult<PageResponse<Blog>> findBlogsByTagsWithPage(GetBlogsPageByTagsRequest request);
+    JsonResult findBlogByTagsWithPage(GetBlogPageByTagsRequest request);
 
     /**
      * 修改博客信息
-     *
-     * @param request
-     * @return
      */
     JsonResult updateBlogByBlogId(UpdateBlogRequest request);
+
+    /**
+     * 新增博客
+     */
+    JsonResult addBlog(AddBlogRequest request);
+
+    JsonResult deleteBlog(String blogId);
 }

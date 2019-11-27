@@ -1,13 +1,14 @@
 package com.hdd.openblog.service.impl;
 
+import com.hdd.openblog.common.PageRequest;
+import com.hdd.openblog.common.PageResponse;
 import com.hdd.openblog.dao.BlogMongoDao;
 import com.hdd.openblog.domain.pojo.mongo.Blog;
-import com.hdd.openblog.domain.request.GetBlogsPageByTagsRequest;
+import com.hdd.openblog.domain.request.GetBlogPageByTagsRequest;
 import com.hdd.openblog.service.BlogService;
+import com.mongodb.client.result.UpdateResult;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 /**
@@ -24,18 +25,16 @@ public class BlogServiceImpl implements BlogService {
 
     /**
      * 分页检索博客摘要列表
-     *
-     * @param pageRequest
-     * @return
      */
     @Override
-    public Page<Blog> findBlogByPage(PageRequest pageRequest) {
-        return blogMongoDao.findBlogByPage(pageRequest);
+    public PageResponse<Blog> findBlogByPage(PageRequest request) {
+        return blogMongoDao.findBlogByPage(request.getPageNo(), request.getPageSize(), null);
     }
 
     @Override
-    public ObjectId addBlog(Blog blog) {
-        return blogMongoDao.insertBlog(blog);
+    public Boolean addBlog(Blog blog) {
+        blogMongoDao.insertBlog(blog);
+        return true;
     }
 
     @Override
@@ -43,7 +42,19 @@ public class BlogServiceImpl implements BlogService {
         return blogMongoDao.getBlogById(id);
     }
 
-    public Page<Blog> findBlogsByTagsWithPage(GetBlogsPageByTagsRequest request) {
-        blogMongoDao.findBlogsByTagsWithPage(request);
+    @Override
+    public Boolean editBlog(Blog blog) {
+        UpdateResult updateResult = blogMongoDao.editBlog(blog);
+        return updateResult.getModifiedCount() > 0;
+    }
+
+    @Override
+    public Boolean deleteBlog(String blogId) {
+        return blogMongoDao.deleteBlog(blogId);
+    }
+
+    @Override
+    public PageResponse<Blog> findBlogByTagsWithPage(GetBlogPageByTagsRequest request) {
+        return blogMongoDao.findBlogByTagsWithPage(request.getPageNo(), request.getPageSize(), request.getTags());
     }
 }

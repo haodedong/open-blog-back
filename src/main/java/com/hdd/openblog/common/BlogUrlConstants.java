@@ -1,13 +1,16 @@
 package com.hdd.openblog.common;
 
 /**
- * @program: open-blog
- * @description: 博客URL
- * @author: dedong.hao
- * @create: 2019-11-26 21:36
+ * Created by bill.hao
+ * Descripton :
+ * Time :2019/11/27
  */
-interface BaseUrlConstants {
-    interface BlogUrl {
-//        String
+public interface BlogUrlConstants {
+    interface BlogUrl{
+        String BLOG_PAGE ="blogPage";
+
+        String BLOG_TAG_PAGE ="blogtagPage";
+
+        String BLOG ="blog";
     }
 }
